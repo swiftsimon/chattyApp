@@ -1,30 +1,28 @@
 {
-  "name": "react-simple-boilerplate",
+  "name": "ChattyAPP",
   "version": "1.0.0",
-  "description": "Simple and lightweight Boilerplate for ReactJS projects",
+  "description": "Primarily a client-side SPA built with ReactJS",
   "scripts": {
     "lint": "eslint --ext .jsx,.js src",
     "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/noahlotzer/react-simple-boilerplate.git"
+    "url": "https://github.com/swiftsimon/chattyApp"
   },
   "keywords": [
     "react",
     "reactjs",
-    "boilerplate",
     "reload",
     "live",
     "edit",
     "webpack"
   ],
-  "author": "Noah-Jerome Lotzer <n.lotzer@neusta.de>",
+  "author": "Simon Hamilton",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/noahlotzer/react-simple-boilerplate/issues"
+
   },
-  "homepage": "https://github.com/noahlotzer/react-simple-boilerplate",
   "engines": {
     "node": ">=6.0.0"
   },
