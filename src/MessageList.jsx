@@ -12,7 +12,7 @@ render() {
       <main className="messages">
         {this.props.messages.map((message, index) => {
             return (
-              <Message userName={message.username} content={message.content} key={message.id} />
+              <Message userName={message.username} content={message.content} key={index} />
             )
           })
         }
