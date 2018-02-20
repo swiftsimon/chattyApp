@@ -24,7 +24,7 @@ render() {
           if (event.key === "Enter") {
             //call function to update message list
             this._submitChange();
-            event.target.value = '';
+            event.target.value = ''; // clear the input field
           }
         }}
 
@@ -34,7 +34,10 @@ render() {
 }
 
   _inputChanged = event => {
-    this.setState({ content: event.target.value, username: this.props.currentUser, id: Math.floor(Math.random() * 1000000000000) });
+    this.setState({
+      content: event.target.value,
+      username: this.props.currentUser,
+      id: Math.floor(Math.random() * 1000000000000) });
   };
 
   _submitChange = () => {
