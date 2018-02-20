@@ -14,16 +14,23 @@ class App extends Component {
     {
       username: "Bob",
       content: "Has anyone seen my marbles?",
-      id: '00'
+      id: '22'
     },
     {
       username: "Anonymous",
       content: "No, I think you lost them. You lost your marbles Bob. You lost them for good.",
-      id: '01'
+      id: '33'
     }
-  ]
+  ]}
+ }
+
+
+      updateView = (incoming) => {
+        const updatedMessages = this.state.messages.concat(incoming)
+        this.setState({messages: updatedMessages})
+
+
 }
-  }
 
 
 
@@ -33,7 +40,7 @@ class App extends Component {
         <a href="/" className="navbar-brand">Chatty</a>
       </nav>
         <MessageList messages={this.state.messages} />
-        <ChatBar currentUser={this.state.currentUser.name} />
+        <ChatBar currentUser={this.state.currentUser.name} update={this.updateView} />
     </div>
     );
   }
