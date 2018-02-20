@@ -3,6 +3,7 @@ import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
 
 
+
 class App extends Component {
 
   constructor(props) {
@@ -25,12 +26,10 @@ class App extends Component {
  }
 
 
-      updateView = (incoming) => {
-        const updatedMessages = this.state.messages.concat(incoming)
-        this.setState({messages: updatedMessages})
-
-
-}
+    updateView = (incoming) => {
+      const updatedMessages = this.state.messages.concat(incoming)
+      this.setState({messages: updatedMessages})
+  }
 
 
 
@@ -44,5 +43,28 @@ class App extends Component {
     </div>
     );
   }
+
+componentDidMount() {
+
+  this.socket = new WebSocket("ws://localhost:3001/");
+    console.log("new client connection", this.socket)
 }
+
+
+
+
+
+}
+
+
 export default App;
+
+
+
+
+
+
+
+
+
+
