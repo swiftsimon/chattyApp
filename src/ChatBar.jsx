@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 
+
 class ChatBar extends Component {
 
   constructor(props) {
@@ -36,9 +37,8 @@ render() {
   _inputChanged = event => {
     this.setState({
       content: event.target.value,
-      username: this.props.currentUser,
-      id: Math.floor(Math.random() * 1000000000000) });
-  };
+      username: this.props.currentUser});
+};
 
   _submitChange = () => {
     this.props.update(this.state);
