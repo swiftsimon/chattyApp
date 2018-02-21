@@ -26,13 +26,17 @@ class App extends Component {
             console.log("connected to server")
     }
     this.socket.onmessage = (event) => {
+
       let displayData = JSON.parse(event.data);
+
+      if (displayData.content !== '') {
       console.log("data from server to client", displayData);
-      console.log("empty aray", this.state.messages)
+      this.setState({currentUser: displayData.username})
       //the ...this pulls in the existing message, then we add displayData
       const messagesNew = [...this.state.messages, displayData]
-      console.log("new messages variable", messagesNew, this)
+      console.log("new messages variable", messagesNew)
       this.handleMessage(messagesNew);
+    }
     }
   }
 
@@ -54,24 +58,23 @@ class App extends Component {
         <a href="/" className="navbar-brand">Chatty</a>
       </nav>
         <MessageList messages={this.state.messages} />
-        <ChatBar currentUser={this.state.currentUser.name} update={this.sendMessageToServer} />
+        <ChatBar update={this.sendMessageToServer} />
     </div>
     );
   }
 
 
 
-
   // Send text to all users through the server
-sendMessageToServer = (props) => {
+  sendMessageToServer = (props) => {
   // console.log("this", this.socket)
   // Construct a msg object containing the data the server needs to process the message from the chat client.
-  const incomingMessage = props
+    const incomingMessage = props
 // console.log("message", incomingMessage)
   // Send the msg object as a JSON-formatted string.
-  this.socket.send(JSON.stringify(incomingMessage));
+    this.socket.send(JSON.stringify(incomingMessage));
 
-}
+  }
 
 
 
