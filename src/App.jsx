@@ -8,10 +8,10 @@ class App extends Component {
     super(props);
 
     this.state = {
-      currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: {name: ""}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: []
     };
-    this.handleMessage = this.handleMessage.bind(this);
+    // this.handleMessage = this.handleMessage.bind(this);
  }
 
 
@@ -29,15 +29,24 @@ class App extends Component {
       let displayData = JSON.parse(event.data);
       console.log("data from server to client", displayData);
       console.log("empty aray", this.state.messages)
+      //the ...this pulls in the existing message, then we add displayData
       const messagesNew = [...this.state.messages, displayData]
       console.log("new messages variable", messagesNew, this)
       this.handleMessage(messagesNew);
     }
   }
 
-  handleMessage(newMessageArray) {
+
+  handleMessage = (newMessageArray) => {
     this.setState({messages: newMessageArray})
   }
+
+  componentWillUnmount() {
+    if(this.socket){
+      this.socket.close();
+    }
+  }
+
 
   render() {
     return (<div>
