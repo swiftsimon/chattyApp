@@ -31,14 +31,12 @@ wss.on('connection', (ws) => {
 
     let newId = uuidv4();
     let parsedData = JSON.parse(data)
+    parsedData.id = newId
 
     switch(parsedData.type) {
 
         case "postMessage":
-          parsedData.id = newId
           parsedData.type = "incomingMessage"
-          // let sendableData = JSON.stringify(parsedData)
-          // console.log("sending message from server", sendableData)
           wss.clients.forEach(function each(client) {
             if (client.readyState === ws.OPEN) {
               client.send(JSON.stringify(parsedData));
@@ -47,17 +45,12 @@ wss.on('connection', (ws) => {
             break;
 
         case "postNotification":
-          parsedData.id = newId
           parsedData.type = "incomingNotification"
-
-          let sendNotification = JSON.stringify(parsedData)
-
           wss.clients.forEach(function each(client) {
             if (client.readyState === ws.OPEN) {
-              client.send(sendNotification);
+              client.send(JSON.stringify(parsedData));
               }
             });
-
           break;
 
         default:
@@ -71,19 +64,17 @@ wss.on('connection', (ws) => {
   ws.on('close', () => {
 
     let countDownObj = {}
-  countDownObj.countUsers = wss.clients.size;
-  countDownObj.type = "userUpdate";
-  let sendDownCount = JSON.stringify(countDownObj);
+    countDownObj.countUsers = wss.clients.size;
+    countDownObj.type = "userUpdate";
+    let sendDownCount = JSON.stringify(countDownObj);
 
   wss.clients.forEach(function each(client) {
-  if (client.readyState === ws.OPEN) {
-        client.send(sendDownCount);
+    if (client.readyState === ws.OPEN) {
+          client.send(sendDownCount);
       }
     });
-
-
     console.log('Client disconnected');
-    console.log('CLOSED #', wss.clients.size)
+
     })
 });
 
