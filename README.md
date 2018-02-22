@@ -1,4 +1,4 @@
-Chat App
+Chat App - using React
 =====================
 
 A multi-user chat room application, where users submit messages under their username
