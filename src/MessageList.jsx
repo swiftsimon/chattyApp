@@ -25,7 +25,7 @@ render() {
 
                 return(
                   <div>
-                    <div className="message system">
+                    <div className="message system" key={index}>
                       <span className="message-system-notify"> { this.props.olduser + message.notify } </span>
                     </div>
                   </div>

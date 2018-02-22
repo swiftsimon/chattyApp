@@ -10,7 +10,8 @@ class App extends Component {
     super(props);
 
     this.state = {
-      currentUser: "Anonymous", // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: "new user", // optional. if currentUser is not defined, it means the user is Anonymous
+      prevUser: "",
       messages: [],
       userCount:"",
     };
@@ -47,7 +48,7 @@ class App extends Component {
 
         case "incomingNotification":
 
-            console.log("notification on APP old user", this.state.currentUser)
+            console.log("notification on APP old user", this.state)
                   // handleNameChange(this.state.currentUser);
                   let prevUser = this.state.currentUser
             const notifyNew = [...this.state.messages, displayData]
@@ -97,10 +98,10 @@ class App extends Component {
 
 
   render() {
-    let prevUser = this.state.prevUser
+
     return (<div>
         <Nav number={this.state}/>
-        <MessageList messages={this.state.messages} olduser={prevUser}/>
+        <MessageList messages={this.state.messages} olduser={this.state.prevUser}/>
         <ChatBar update={this.sendMessageToServer} />
     </div>
     );

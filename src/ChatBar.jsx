@@ -12,11 +12,12 @@ class ChatBar extends Component {
 
 
 render() {
+
   return(
   <footer className="chatbar">
 
     <input className="chatbar-username"
-        placeholder="Your Name (Optional)"
+        placeholder="Type name and press ENTER"
         onChange={this._nameChanged}
         onKeyPress={event => {
           if (event.key === "Enter") {
