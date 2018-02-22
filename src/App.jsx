@@ -12,7 +12,7 @@ class App extends Component {
     this.state = {
       currentUser: "new user",
       messages: [],
-      userCount:"",
+      countUsers:"",
     };
 
  }
@@ -25,8 +25,9 @@ class App extends Component {
     this.socket.onmessage = (event) => {
     // incoming message is a string, so turn it back into an object
       let displayData = JSON.parse(event.data);
+      console.log("message data", displayData)
       const messages = [...this.state.messages, displayData];
-      this.setState({messages})
+      this.setState({messages: messages, countUsers: displayData.countUsers})
     }
   }
 
@@ -40,41 +41,40 @@ class App extends Component {
 
   render() {
 
-    return (<div>
+    return (
+      <div>
         <Nav number={this.state}/>
-        <MessageList messages={this.state.messages} olduser={this.state.prevUser}/>
-        <ChatBar onUsernameChange={this._handleUsernameChange} onMessageSubmit={this._handleMessageSubmit} />
-    </div>
+        <MessageList messages={this.state.messages} />
+        <ChatBar onUsernameChange={this._handleUsernameChange}
+                 onMessageSubmit={this._handleMessageSubmit} />
+       </div>
     );
   }
 
   _handleUsernameChange = (newUsername) => {
     const message = {
       type: 'postNotification',
-      content: `${this.state.currentUser} has change their name to ${newUsername}.`
+      content: `${this.state.currentUser} has change their name to ${newUsername}.`,
+      countUsers: this.state.countUsers,
     }
-    this.setState({ currentUser: newUsername }, () => {
+    this.setState({ currentUser: newUsername}, () => {
       this.sendMessageToServer(message)
     })
-
   }
 
   _handleMessageSubmit = (content) => {
     const message = {
       type: 'postMessage',
       username: this.state.currentUser,
+      countUsers: this.state.countUsers,
       content
     }
     this.sendMessageToServer(message)
   }
-  // Send text to all users through the server
-  sendMessageToServer = (state) => {
-  // Construct a msg object containing the data the server needs to process the message from the chat client.
-    const incomingMessage = state
-    // console.log("send message to server from APP", incomingMessage)
-  // Send the msg object as a JSON-formatted string.
-    this.socket.send(JSON.stringify(incomingMessage));
 
+  sendMessageToServer = (state) => {
+    const incomingMessage = state
+    this.socket.send(JSON.stringify(incomingMessage));
   }
 }
 

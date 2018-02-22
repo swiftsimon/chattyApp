@@ -7,30 +7,21 @@ import Notify from './Notify.jsx';
 class MessageList extends Component {
 
 
-render() {
-  return(
-    <div>
-      <main className="messages">
-
-        {this.props.messages.map( message => {
+  render() {
+    return(
+        <div>
+          <main className="messages">
+          {this.props.messages.map( message => {
             if (message.type === "incomingMessage") {
-
-              return (
-              <Message userName={message.username} content={message.content} key={message.id} />
-              )
-
+              return <Message userName={message.username} content={message.content} key={message.id} />
             } else {
-                return <Notify key={message.id} content={message.content}/>
+              return <Notify key={message.id} content={message.content}/>
             }
-
-            }
-            )
-      }
-      </main>
-    </div>
-
-  )
-
+          })
+        }
+          </main>
+        </div>
+    )
   }
 }
 
