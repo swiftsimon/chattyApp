@@ -12,20 +12,21 @@ render() {
       <main className="messages">
 
         {this.props.messages.map((message, index) => {
-          // console.log("message HTML", message)
+
 
             if (message.type === "incomingMessage") {
-                console.log("IF")
+
               return (
               <Message userName={message.username} content={message.content} key={index} />
               )
 
             } else {
-                console.log("ELSE", message)
+
+
                 return(
                   <div>
                     <div className="message system">
-                      <span className="message-system-notify"> { message.notify } </span>
+                      <span className="message-system-notify"> { this.props.olduser + message.notify } </span>
                     </div>
                   </div>
                 )

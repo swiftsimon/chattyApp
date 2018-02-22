@@ -9,7 +9,7 @@ render() {
 
   return(
     <div>
-      { console.log("AAAAAAAA", this.props.number.userCount)}
+
      <nav className="navbar">
         <a href="/" className="navbar-brand">Chatty</a>
         <div className="navnumber">

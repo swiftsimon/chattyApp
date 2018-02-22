@@ -48,7 +48,7 @@ _nameChanged = (event) => {
   this.setState({
     username: event.target.value,
     type: "postNotification",
-    notify: `user ${prevUser} changed name to ${event.target.value}`,
+    notify: ` changed name to ${event.target.value}`,
   })
 }
 
