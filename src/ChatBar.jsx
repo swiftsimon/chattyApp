@@ -6,8 +6,9 @@ class ChatBar extends Component {
   constructor(props) {
       super(props);
 
-      this.state = {id: "" , username: "", content: ""};
+      this.state = {id: "" , type: "", username: "", content: "", notify: ""};
 };
+
 
 
 render() {
@@ -15,13 +16,13 @@ render() {
   <footer className="chatbar">
 
     <input className="chatbar-username"
+        placeholder="Your Name (Optional)"
         onChange={this._nameChanged}
         onKeyPress={event => {
           if (event.key === "Enter") {
-            this._submitChange();
+            this._submitNameChange();
           }
         }}
-        placeholder="Your Name (Optional)"
       />
 
     <input
@@ -41,17 +42,27 @@ render() {
   )
 }
 
-_nameChanged = event => {
+_nameChanged = (event) => {
+  // console.log("event", event)
+  let prevUser = this.state.username
   this.setState({
-    username: event.target.value
+    username: event.target.value,
+    type: "postNotification",
+    notify: `user ${prevUser} changed name to ${event.target.value}`,
   })
 }
 
-  _inputChanged = event => {
+  _inputChanged = (event) => {
     this.setState({
       content: event.target.value,
+      type: "postMessage"
       });
 };
+
+ _submitNameChange = () => {
+    this.props.update(this.state);
+  };
+
 
   _submitChange = () => {
     this.props.update(this.state);

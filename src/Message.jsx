@@ -13,6 +13,7 @@ render() {
         <span className="message-username">{ this.props.userName }</span>
         <span className="message-content">{ this.props.content }</span>
       </div>
+
        <div className="message system">
 
       </div>

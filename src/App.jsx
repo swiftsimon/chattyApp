@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
+import Notify from './Notify.jsx';
+import Nav from './Nav.jsx';
 
 class App extends Component {
 
@@ -8,8 +10,9 @@ class App extends Component {
     super(props);
 
     this.state = {
-      currentUser: {name: ""}, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: []
+      currentUser: "Anonymous", // optional. if currentUser is not defined, it means the user is Anonymous
+      messages: [],
+      userCount:"",
     };
     // this.handleMessage = this.handleMessage.bind(this);
  }
@@ -26,24 +29,56 @@ class App extends Component {
             console.log("connected to server")
     }
     this.socket.onmessage = (event) => {
-
+    // incoming message is a string, so turn it back into an object
       let displayData = JSON.parse(event.data);
+      console.log("FROM SERVER", displayData)
 
-      if (displayData.content !== '') {
-      console.log("data from server to client", displayData);
-      this.setState({currentUser: displayData.username})
+      switch(displayData.type) {
+        case "incomingMessage":
+          //
+
+        const messagesNew = [...this.state.messages, displayData]
+        console.log("new messages variable", messagesNew)
+        this.setState({messages: messagesNew, currentUser: displayData.username})
+          break;
+
+        case "incomingNotification":
+
+            console.log("notification on APP", this.state)
+
+            const notifyNew = [...this.state.messages, displayData]
+            console.log("new state", notifyNew)
+             this.setState({messages: notifyNew, currentUser: displayData.username})
+          //
+          break;
+
+          case "userUpdate":
+
+            console.log("Update Number received in APP", displayData.countUsers)
+            this.setState({userCount: displayData.countUsers})
+            console.log("new state with numbers", this.state)
+
+            // const notifyNew = [...this.state.messages, displayData]
+            // console.log("new state", notifyNew)
+            //  this.setState({})
+
+        default:
+          // throw new Error("Unknown type " + displayData.type);
+      }
+
+
+    // check if message content is empty, prevent displaying an empty message
+      // if (displayData.content !== '') {
+
       //the ...this pulls in the existing message, then we add displayData
-      const messagesNew = [...this.state.messages, displayData]
-      console.log("new messages variable", messagesNew)
-      this.handleMessage(messagesNew);
-    }
+      // }
     }
   }
 
 
-  handleMessage = (newMessageArray) => {
-    this.setState({messages: newMessageArray})
-  }
+  // handleMessage = (newMessageArray) => {
+  //   this.setState({messages: newMessageArray})
+  // }
 
   componentWillUnmount() {
     if(this.socket){
@@ -54,9 +89,7 @@ class App extends Component {
 
   render() {
     return (<div>
-      <nav className="navbar">
-        <a href="/" className="navbar-brand">Chatty</a>
-      </nav>
+        <Nav number={this.state}/>
         <MessageList messages={this.state.messages} />
         <ChatBar update={this.sendMessageToServer} />
     </div>
@@ -64,13 +97,11 @@ class App extends Component {
   }
 
 
-
   // Send text to all users through the server
-  sendMessageToServer = (props) => {
-  // console.log("this", this.socket)
+  sendMessageToServer = (state) => {
   // Construct a msg object containing the data the server needs to process the message from the chat client.
-    const incomingMessage = props
-// console.log("message", incomingMessage)
+    const incomingMessage = state
+    console.log("send message to server from APP", incomingMessage)
   // Send the msg object as a JSON-formatted string.
     this.socket.send(JSON.stringify(incomingMessage));
 
