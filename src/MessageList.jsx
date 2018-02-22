@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Message from './Message.jsx';
+import Notify from './Notify.jsx';
 
 // loop through messages to pass the props to update Message.jsx
 
@@ -11,26 +12,16 @@ render() {
     <div>
       <main className="messages">
 
-        {this.props.messages.map((message, index) => {
-
-
+        {this.props.messages.map( message => {
             if (message.type === "incomingMessage") {
 
               return (
-              <Message userName={message.username} content={message.content} key={index} />
+              <Message userName={message.username} content={message.content} key={message.id} />
               )
 
             } else {
-
-
-                return(
-                  <div>
-                    <div className="message system" key={index}>
-                      <span className="message-system-notify"> { this.props.olduser + message.notify } </span>
-                    </div>
-                  </div>
-                )
-              }
+                return <Notify key={message.id} content={message.content}/>
+            }
 
             }
             )

@@ -10,8 +10,7 @@ render() {
   return(
     <div>
       <div className="message system">
-        <span className="message-system-notify"> notify { this.props.notify }</span>
-
+        <span className="message-system-notify">{ this.props.content }</span>
       </div>
     </div>
     )

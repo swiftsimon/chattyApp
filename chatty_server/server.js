@@ -43,9 +43,7 @@ wss.on('connection', (ws) => {
     let newId = uuidv4();
     let parsedData = JSON.parse(data)
 
-
-console.log("data type entering server", parsedData.type)
-     switch(parsedData.type) {
+    switch(parsedData.type) {
         case "postMessage":
           parsedData.id = newId
           parsedData.type = "incomingMessage"
@@ -62,7 +60,7 @@ console.log("data type entering server", parsedData.type)
           parsedData.id = newId
           parsedData.type = "incomingNotification"
           let sendNotification = JSON.stringify(parsedData)
-          console.log("sending notification from server", sendNotification)
+
           wss.clients.forEach(function each(client) {
             if (client.readyState === ws.OPEN) {
               client.send(sendNotification);
@@ -70,18 +68,11 @@ console.log("data type entering server", parsedData.type)
             });
 
           break;
+
         default:
           throw new Error("Unknown type at server " + data.type);
       }
 
-
-
-
-
-
-    // if (parsedData.content !== "") {
-
-  // }
   });
 
 

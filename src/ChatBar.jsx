@@ -2,76 +2,35 @@ import React, {Component} from 'react';
 
 
 class ChatBar extends Component {
+  render() {
 
-  constructor(props) {
-      super(props);
+    return(
+      <footer className="chatbar">
 
-      this.state = {id: "" , type: "", username: "", content: "", notify: ""};
-};
+        <input className="chatbar-username"
+            placeholder="Type name and press ENTER"
+            onKeyPress={event => {
+              if (event.key === "Enter") {
+                this.props.onUsernameChange(event.target.value)
+                event.target.value = ""
+              }
+            }}
+          />
 
+        <input
+            className="chatbar-message"
+            placeholder="Type a message and hit ENTER"
+            onKeyPress={event => {
+              if (event.key === "Enter") {
+                this.props.onMessageSubmit(event.target.value)
+                event.target.value = ""
+              }
+            }}
 
-
-render() {
-
-  return(
-  <footer className="chatbar">
-
-    <input className="chatbar-username"
-        placeholder="Type name and press ENTER"
-        onChange={this._nameChanged}
-        onKeyPress={event => {
-          if (event.key === "Enter") {
-            this._submitNameChange();
-          }
-        }}
-      />
-
-    <input
-        className="chatbar-message"
-        placeholder="Type a message and hit ENTER"
-        onChange={this._inputChanged}
-        onKeyPress={event => {
-          if (event.key === "Enter") {
-            //call function to update message list
-            this._submitChange();
-            event.target.value = ''; // clear the input field
-          }
-        }}
-
-      />
-  </footer>
-  )
-}
-
-_nameChanged = (event) => {
-  // console.log("event", event)
-  let prevUser = this.state.username
-  this.setState({
-    username: event.target.value,
-    type: "postNotification",
-    notify: ` changed name to ${event.target.value}`,
-  })
-}
-
-  _inputChanged = (event) => {
-    this.setState({
-      content: event.target.value,
-      type: "postMessage"
-      });
-};
-
- _submitNameChange = () => {
-    this.props.update(this.state);
-  };
-
-
-  _submitChange = () => {
-    this.props.update(this.state);
-    this.setState({
-      content:''
-    })
-  };
-
+          />
+      </footer>
+    )
+  }
 }
 
   export default ChatBar;
